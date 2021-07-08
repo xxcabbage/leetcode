@@ -1,0 +1,65 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "build",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": { //要添加到的任务组，支持build或者test。一个任务组可以包含多个任务
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "run",
+            "dependsOn": [
+                "build"
+            ],
+            "command": "${fileDirname}/${fileBasenameNoExtension}", //表示当前的可执行程序
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "test", //在测试任务组中，在命令行中输入run test task也可以运行
+                "isDefault": true
+            },
+            "presentation": { //结果表示
+                "echo": true, //是否输出相关结果信息
+                "reveal": "always", //是否显示终端面板，always表示总是显示
+                "focus": false, //面板获取键盘输入的焦点
+                "panel": "new", //在新的面板输出信息，选择share会和其他结束了的任务共享面板
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "type": "shell",
+            "label": "clean",
+            "command": "rm -rf ${fileDirname}/${fileBasenameNoExtension}",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        }
+    ]
+}
